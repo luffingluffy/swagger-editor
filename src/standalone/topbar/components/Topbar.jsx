@@ -24,12 +24,7 @@ export default class Topbar extends React.Component {
   }
 
   getGeneratorUrl = () => {
-    const { isOAS3, isSwagger2 } = this.props.specSelectors
-    const { swagger2GeneratorUrl, oas3GeneratorUrl } = this.props.getConfigs()
-
-    return isOAS3() ? oas3GeneratorUrl : (
-      isSwagger2() ? swagger2GeneratorUrl : null
-    )
+    return ''
   }
 
   instantiateGeneratorClient = () => {

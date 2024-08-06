@@ -46,33 +46,33 @@ export default class Topbar extends React.Component {
         req.headers["Content-Type"] = "application/json"
       }
     })
-    .then(client => {
-      this.setState({
-        swaggerClient: client
-      })
+      .then(client => {
+        this.setState({
+          swaggerClient: client
+        })
 
-      const clientGetter = isOAS3 ? client.apis.clients.clientLanguages : client.apis.clients.clientOptions
-      const serverGetter = isOAS3 ? client.apis.servers.serverLanguages : client.apis.servers.serverOptions
+        const clientGetter = isOAS3 ? client.apis.clients.clientLanguages : client.apis.clients.clientOptions
+        const serverGetter = isOAS3 ? client.apis.servers.serverLanguages : client.apis.servers.serverOptions
 
 
-      clientGetter({}, {
-        // contextUrl is needed because swagger-client is curently
-        // not building relative server URLs correctly
-        contextUrl: generatorUrl
-      })
-      .then(res => {
-        this.setState({ clients: res.body || [] })
-      })
+        clientGetter({}, {
+          // contextUrl is needed because swagger-client is curently
+          // not building relative server URLs correctly
+          contextUrl: generatorUrl
+        })
+          .then(res => {
+            this.setState({ clients: res.body || [] })
+          })
 
-      serverGetter({}, {
-        // contextUrl is needed because swagger-client is curently
-        // not building relative server URLs correctly
-        contextUrl: generatorUrl
+        serverGetter({}, {
+          // contextUrl is needed because swagger-client is curently
+          // not building relative server URLs correctly
+          contextUrl: generatorUrl
+        })
+          .then(res => {
+            this.setState({ servers: res.body || [] })
+          })
       })
-      .then(res => {
-        this.setState({ servers: res.body || [] })
-      })
-    })
   }
 
   downloadFile = (content, fileName) => {
@@ -185,8 +185,8 @@ export default class Topbar extends React.Component {
         },
         contextUrl: this.getGeneratorUrl()
       }).then(res => {
-        this.downloadFile(res.data, `${name}-${type}-generated.zip`)
-      })
+          this.downloadFile(res.data, `${name}-${type}-generated.zip`)
+        })
     } else if(type === "server") {
       swaggerClient.apis.servers.generateServerForLanguage({
         framework : name,
@@ -351,15 +351,15 @@ export default class Topbar extends React.Component {
             </Link>
             <DropdownMenu {...makeMenuOptions("File")}>
               <li><button type="button" onClick={this.importFromURL}>Import URL</button></li>
-r             <ImportFileMenuItem onDocumentLoad={content => this.props.specActions.updateSpec(content)} />
+              <ImportFileMenuItem onDocumentLoad={content => this.props.specActions.updateSpec(content)} />
               <li role="separator"></li>
               {isJson ? [
-                  <li key="1"><button type="button" onClick={this.saveAsJson}>Save as JSON</button></li>,
-                  <li key="2"><button type="button" onClick={this.saveAsYaml}>Convert and save as YAML</button></li>
+                <li key="1"><button type="button" onClick={this.saveAsJson}>Save as JSON</button></li>,
+                <li key="2"><button type="button" onClick={this.saveAsYaml}>Convert and save as YAML</button></li>
               ] : [
                   <li key="1"><button type="button" onClick={this.saveAsYaml}>Save as YAML</button></li>,
                   <li key="2"><button type="button" onClick={this.saveAsJson}>Convert and save as JSON</button></li>
-              ]}
+                ]}
               <li role="separator"></li>
               <li><button type="button" onClick={this.clearEditor}>Clear editor</button></li>
             </DropdownMenu>
@@ -372,6 +372,13 @@ r             <ImportFileMenuItem onDocumentLoad={content => this.props.specActi
               />
             </DropdownMenu>
             <TopbarInsert {...this.props} />
+            <div style={{ marginLeft: 'auto' }}>
+              <Link href="https://vrolapisvc-development-xdvupa.oce-np-sm-np-b-en.trusted.visa.com/">
+                <button type="button">
+                  Return to VROL API Utility Tool
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
